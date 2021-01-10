@@ -23,7 +23,8 @@ class PostController extends AbstractController
      * @return JsonResponse
      * @Route("/posts", name="posts", methods={"GET"})
      */
-    public function getPosts(PostRepository $postRepository){
+    public function getPosts(PostRepository $postRepository)
+    {
         $data = $postRepository->findAll();
         return $this->response($data);
     }
@@ -36,12 +37,13 @@ class PostController extends AbstractController
      * @throws \Exception
      * @Route("/posts", name="posts_add", methods={"POST"})
      */
-    public function addPost(Request $request, EntityManagerInterface $entityManager, PostRepository $postRepository){
+    public function addPost(Request $request, EntityManagerInterface $entityManager, PostRepository $postRepository)
+    {
 
-        try{
+        try {
             $request = $this->transformJsonBody($request);
 
-            if (!$request || !$request->get('name') || !$request->request->get('description')){
+            if (!$request || !$request->get('name') || !$request->request->get('description')) {
                 throw new \Exception();
             }
 
@@ -58,7 +60,7 @@ class PostController extends AbstractController
             ];
             return $this->response($data);
 
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             $data = [
                 'status' => 422,
                 'errors' => "Data no valid",
@@ -74,10 +76,11 @@ class PostController extends AbstractController
      * @return JsonResponse
      * @Route("/posts/{id}", name="posts_get", methods={"GET"})
      */
-    public function getPost(PostRepository $postRepository, $id){
+    public function getPost(PostRepository $postRepository, $id)
+    {
         $post = $postRepository->find($id);
 
-        if (!$post){
+        if (!$post) {
             $data = [
                 'status' => 404,
                 'errors' => "Post not found",
@@ -95,12 +98,13 @@ class PostController extends AbstractController
      * @return JsonResponse
      * @Route("/posts/{id}", name="posts_put", methods={"PUT"})
      */
-    public function updatePost(Request $request, EntityManagerInterface $entityManager, PostRepository $postRepository, $id){
+    public function updatePost(Request $request, EntityManagerInterface $entityManager, PostRepository $postRepository, $id)
+    {
 
-        try{
+        try {
             $post = $postRepository->find($id);
 
-            if (!$post){
+            if (!$post) {
                 $data = [
                     'status' => 404,
                     'errors' => "Post not found",
@@ -110,7 +114,7 @@ class PostController extends AbstractController
 
             $request = $this->transformJsonBody($request);
 
-            if (!$request || !$request->get('name') || !$request->request->get('description')){
+            if (!$request || !$request->get('name') || !$request->request->get('description')) {
                 throw new \Exception();
             }
 
@@ -124,7 +128,7 @@ class PostController extends AbstractController
             ];
             return $this->response($data);
 
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             $data = [
                 'status' => 422,
                 'errors' => "Data no valid",
@@ -141,10 +145,11 @@ class PostController extends AbstractController
      * @return JsonResponse
      * @Route("/posts/{id}", name="posts_delete", methods={"DELETE"})
      */
-    public function deletePost(EntityManagerInterface $entityManager, PostRepository $postRepository, $id){
+    public function deletePost(EntityManagerInterface $entityManager, PostRepository $postRepository, $id)
+    {
         $post = $postRepository->find($id);
 
-        if (!$post){
+        if (!$post) {
             $data = [
                 'status' => 404,
                 'errors' => "Post not found",
